@@ -1,0 +1,3 @@
+
+
+export const SET_VALUE_INTO_SQUARE = 'SET_VALUE_INTO_SQUARE';
