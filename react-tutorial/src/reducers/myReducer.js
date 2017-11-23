@@ -1,32 +1,10 @@
-import { SET_VALUE_INTO_SQUARE, CALUCULATE_WINNER } from '../constants/ActionTypes'
+import { combineReducers } from 'redux'
+import squares from './squares'
+import xIsNext from './xIsNext'
 
-const initialState = {
-  squares: Array(9).fill(null),
-  xIsNext: true
-}
+const myReducers = combineReducers({
+  squares,
+  xIsNext
+})
 
-const myReducer = (state = initialState, action) => {
-
-  switch ( action.type ) {
-
-    case SET_VALUE_INTO_SQUARE:
-
-      const squares = state.squares.slice();
-
-      if ( action.winner || squares[action.index] ) {
-        return state
-      }
-
-      squares[action.index] = (state.xIsNext) ? 'X' : 'O';
-      return {
-        squares,
-        xIsNext: !state.xIsNext
-      }
-
-    default:
-      return state
-
-  }
-}
-
-export default myReducer
+export default myReducers

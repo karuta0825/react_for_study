@@ -32,6 +32,7 @@ class BoardBox extends React.Component {
       [0, 4, 8],
       [2, 4, 6],
     ];
+    // ループ処理は、関数型でかけないか？
     for (let i = 0; i < lines.length; i++) {
       const [a, b, c] = lines[i];
       if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
@@ -42,24 +43,24 @@ class BoardBox extends React.Component {
   }
 
   render() {
-    const { squares, onSquareClick} = this.props
+    const { squares, xIsNext, onSquareClick} = this.props
     return (
       <div>
         <div className="status">{ this.showStatus() }</div>
         <div className="board-row">
-          <Square value={squares[0]} onClick={() => onSquareClick(0, this.calculateWinner())} />
-          <Square value={squares[1]} onClick={() => onSquareClick(1, this.calculateWinner())} />
-          <Square value={squares[2]} onClick={() => onSquareClick(2, this.calculateWinner())} />
+          <Square value={squares[0]} onClick={() => onSquareClick(0, xIsNext, this.calculateWinner())} />
+          <Square value={squares[1]} onClick={() => onSquareClick(1, xIsNext, this.calculateWinner())} />
+          <Square value={squares[2]} onClick={() => onSquareClick(2, xIsNext, this.calculateWinner())} />
         </div>
         <div className="board-row">
-          <Square value={squares[3]} onClick={() => onSquareClick(3, this.calculateWinner())} />
-          <Square value={squares[4]} onClick={() => onSquareClick(4, this.calculateWinner())} />
-          <Square value={squares[5]} onClick={() => onSquareClick(5, this.calculateWinner())} />
+          <Square value={squares[3]} onClick={() => onSquareClick(3, xIsNext, this.calculateWinner())} />
+          <Square value={squares[4]} onClick={() => onSquareClick(4, xIsNext, this.calculateWinner())} />
+          <Square value={squares[5]} onClick={() => onSquareClick(5, xIsNext, this.calculateWinner())} />
         </div>
         <div className="board-row">
-          <Square value={squares[6]} onClick={() => onSquareClick(6, this.calculateWinner())} />
-          <Square value={squares[7]} onClick={() => onSquareClick(7, this.calculateWinner())} />
-          <Square value={squares[8]} onClick={() => onSquareClick(8, this.calculateWinner())} />
+          <Square value={squares[6]} onClick={() => onSquareClick(6, xIsNext, this.calculateWinner())} />
+          <Square value={squares[7]} onClick={() => onSquareClick(7, xIsNext, this.calculateWinner())} />
+          <Square value={squares[8]} onClick={() => onSquareClick(8, xIsNext, this.calculateWinner())} />
         </div>
       </div>
     )
@@ -82,8 +83,10 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onSquareClick: (id, winner) => {
-      dispatch( fillSquare(id, winner ) )
+    onSquareClick: (id, xIsNext, winner) => {
+      if ( !winner ) {
+        dispatch( fillSquare(id, xIsNext) )
+      }
     }
   }
 }
